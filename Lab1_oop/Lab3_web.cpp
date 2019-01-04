@@ -20,9 +20,9 @@ const char *distanceBetweenCentersCommand = "D";
 const char *determineAnglesCommand = "A";
 const char *infoCommand = "I";
 
-const char *triangleType1 = "Type1";
-const char *triangleType2 = "Type2";
-const char *triangleType3 = "Type3";
+const char *triangleType1 = "Разносторонний";
+const char *triangleType2 = "Равнобедренный";
+const char *triangleType3 = "Равносторонний";
 
 const int anglesCount = 3;
 const int triangleParametersCount = 3;
@@ -41,8 +41,8 @@ int main()
 
 	char *queryString = getenv(queryStringKey);
 	/*char *queryString = new char[256]{ NULL };
-	strcat(queryString, "1,20,20,60,1,D");*/
-	char **arguments = getArgumentsFromString(queryString, splitter);
+	strcat(queryString, "2,20,20,60,3,4,90,1,A,2,A");*/
+		char **arguments = getArgumentsFromString(queryString, splitter);
 
 	int num = atoi(arguments[0]),
 		count = getArgumentsCount(queryString, splitter[0]);
@@ -152,12 +152,12 @@ char* anglesString(Triangle *triangle) {
 Triangle** parseTrianglesFromString(int num, char **arguments) {
 	Triangle **result = new Triangle*[num];
 
-	for (int i = 0; i < num; i++) {
+	for (int i = 0; i < num * 3; i += 3) {
 		double side1 = atoi(arguments[i]),
 			side2 = atoi(arguments[i + 1]),
 			angle = atoi(arguments[i + 2]);
 
-		result[i] = new Triangle(angle, side1, side2);
+		result[i / 3] = new Triangle(angle, side1, side2);
 	}
 
 	return result;
